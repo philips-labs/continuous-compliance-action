@@ -17,20 +17,6 @@ jobs:
       - name: Checkout Continuous Compliance 
         uses: actions/checkout@v2
 
-      - name: Checkout repolinter 
-        uses: actions/checkout@v2
-        with:
-          path: repolinter
-          repository: philips-labs/repolinter
-          ref: master
-
-      - name: Install repolinter 
-        run: |
-          su node
-          cd repolinter
-          npm install
-          cd ..
-
       - name: Build Docker Images
         uses: philips-software/docker-ci-scripts@v3.3.2
         with:

@@ -3,19 +3,12 @@ FROM philipssoftware/node:lts
 LABEL maintainer="Jeroen Knoops <jeroen.knoops@philips.com>"
 LABEL maintainer="Brend Smits <brend.smits@philips.com>"
 
-RUN ls -all
-
 WORKDIR /app
 COPY . /app
 
-RUN ls -all
+RUN git clone https://github.com/philips-labs/repolinter.git && cd repolinter && npm i && cd ..
 
-# Add REPO en TAGS info
-ADD REPO .
-ADD TAGS .
+ENTRYPOINT ["/app/repolinter/bin/repolinter.js"]
 
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
-
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+# FOR DEBUGGING IMAGE
+# ENTRYPOINT ["tail", "-f", "/dev/null"]

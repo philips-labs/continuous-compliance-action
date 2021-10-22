@@ -1,0 +1,45 @@
+name: Create environment 
+
+on:
+  push:
+    paths:
+      - Dockerfile
+      - config/*
+      - .github/workflows/environment.yml
+  workflow_dispatch:
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    container: philipssoftware/node:lts
+
+    steps:
+      - name: Checkout Continuous Compliance 
+        uses: actions/checkout@v2
+
+      - name: Checkout repolinter 
+        uses: actions/checkout@v2
+        with:
+          path: repolinter
+          repository: philips-labs/repolinter
+          ref: master
+
+      - name: Install repolinter 
+        run: |
+          su node
+          cd repolinter
+          npm install
+          cd ..
+
+      - name: Build Docker Images
+        uses: philips-software/docker-ci-scripts@v3.3.2
+        with:
+          dockerfile: .
+          image-name: continuous-compliance
+          tags: latest 0.1
+          push-branches: main develop
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_REGISTRY: ghcr.io/philips-labs
+          GITHUB_ORGANIZATION: philips-labs

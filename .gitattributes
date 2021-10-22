@@ -1,0 +1,22 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# These files are text and should be normalized (convert crlf =&gt; lf)
+*.cs eol=lf diff=csharp
+*.ts eol=lf
+*.js eol=lf
+*.csproj text
+*.sln text
+*.tt text
+*.ps1 text
+*.cmd text
+*.msbuild text
+*.xaml text
+*.md eol=lf
+
+# Images should be treated as binary
+# (binary is a macro for -text -diff)
+*.png binary
+*.jepg binary
+
+*.sdf binary

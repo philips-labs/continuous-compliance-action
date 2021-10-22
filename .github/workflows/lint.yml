@@ -1,0 +1,102 @@
+name: Repolinter
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository_input:
+        description: 'Target Repository (my-org/repository)'     
+        required: true
+      check_tracked:
+        description: 'Check if repository is checked before (true/false)'     
+        required: true
+        default: 'true'
+      timeframe:
+        description: 'Timeframe in seconds'     
+        required: false
+        default: '86400'
+      modify_tracked_list:
+        description: 'Upsert repository in tracked repo list (true/false)'     
+        required: true
+        default: 'true'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: ghcr.io/philips-labs/continuous-compliance:latest
+    env:
+      TARGET_REPO: ${{ github.event.inputs.repository_input }}
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout CC for the loop script 
+        uses: actions/checkout@v2
+
+      - name: Run Bash script to check if repo is in Tracked file
+        if:  ${{ github.event.inputs.check_tracked == 'true' }}
+        run: |
+          chmod +x bin/check-tracked-repo.sh
+          repo=$(bin/check-tracked-repo.sh data/checked-repos.txt ${{env.TARGET_REPO}})
+          echo "::set-output name=TRACKED_REPO::$repo"
+          echo "::set-output name=REPO::$(echo $repo | cut -d' ' -f1)"
+          echo "::set-output name=TIME::$(echo $repo | cut -d' ' -f2)"
+        id: repo_tracker
+
+      - name: Run Bash script to check if repo is within timeframe
+        if:  ${{ github.event.inputs.check_tracked == 'true' && steps.repo_tracker.outputs.TRACKED_REPO != ''}}
+        run: |
+          chmod +x bin/compare-timeout-times.sh
+          check_repo=$(bin/compare-timeout-times.sh ${{ github.event.inputs.timeframe }} ${{ steps.repo_tracker.outputs.TIME }})
+          echo "::set-output name=BOOLEAN::$check_repo"
+          echo $check_repo
+        id: check_repo
+
+      - name: Set variables
+        run: |
+          time=${{ steps.repo_tracker.outputs.TIME }}
+          repo=${{ steps.repo_tracker.outputs.REPO }}
+          current_time=$(date +%s)
+          boolean=${{ steps.check_repo.outputs.BOOLEAN }}
+          target_repo=${{env.TARGET_REPO}}
+          echo "::set-output name=TIME::${time:=$(date +%s)}"
+          echo "::set-output name=CURRENT_TIME::$current_time"
+          echo "::set-output name=REPO::${repo:=$target_repo}"
+          echo "::set-output name=CHECK_REPO::${boolean:=true}"
+          echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+        id: set_variables
+
+      - name: Run repolinter on target repository
+        if:  ${{ github.event.inputs.check_tracked == 'false' || steps.set_variables.outputs.CHECK_REPO == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          /app/repolinter/bin/repolinter.js lint --rulesetFile ${GITHUB_WORKSPACE}/config/repolint.json -g https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{env.TARGET_REPO}}
+
+      - name: Git pull latest version of the checked-repos file to avoid conflicts
+        if:  ${{ github.event.inputs.modify_tracked_list == 'true' && steps.set_variables.outputs.CHECK_REPO == 'true' }}
+        run: |
+          git pull
+
+      - name: Remove tracked repo from checked repo list
+        if:  ${{ github.event.inputs.modify_tracked_list == 'true' && steps.set_variables.outputs.CHECK_REPO == 'true' }}
+        run: |
+          repo=${{ steps.set_variables.outputs.REPO }}
+          escaped=${repo/\//\\/}
+          sed "/$escaped ${{ steps.set_variables.outputs.TIME }}/d" -i data/checked-repos.txt
+
+      - name: Add repo and timestamp to checked repo list
+        if:  ${{ github.event.inputs.modify_tracked_list == 'true' && steps.set_variables.outputs.CHECK_REPO == 'true' }}
+        run: |
+          echo ${{ steps.set_variables.outputs.REPO }} ${{ steps.set_variables.outputs.CURRENT_TIME }} >> data/checked-repos.txt
+
+      - name: Git commit & push the updated checked-repos.txt
+        if:  ${{ github.event.inputs.modify_tracked_list == 'true' && steps.set_variables.outputs.CHECK_REPO == 'true' }}
+        continue-on-error: true
+        run: |
+          git config --global user.name 'Continuous Compliance'
+          git config --global user.email 'cc@philips-labs.com'
+          git add data/checked-repos.txt
+          git commit -m "Automatically added: ${{ steps.set_variables.outputs.REPO }} ${{ steps.set_variables.outputs.CURRENT_TIME }}"
+          git pull
+          git push

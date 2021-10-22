@@ -3,4 +3,5 @@ Continuous Compliance makes it possible to enforce company policy on repositorie
 
 
 # State
-Work in progress - Not functional yet.
+Work in progress - Not functional yet and should not be used in any production application! Be warned!  
+If you want to stay updated, hit the "Watch" button.

@@ -7,7 +7,7 @@ inputs:
   ruleset_file_url:
     description: 'url that links to a ruleset config file'
     required: true
-    default: 'https://gist.githubusercontent.com/Brend-Smits/385824d3422c0c06323bb1412cd5ba96/raw/e28573211e386e520dc7a1a606fda51abce3429a/gistfile1.txt'
+    default: 'https://gist.githubusercontent.com/Brend-Smits/385824d3422c0c06323bb1412cd5ba96/raw/08676dbf366a86641dd30fd5511b91afdee65adc/gistfile1.txt'
   target_repo:
     description: 'Repository url with access token for repository that needs checking'
     required: true

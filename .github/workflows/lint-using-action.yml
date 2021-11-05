@@ -2,6 +2,10 @@ name: Check for compliancy by using the GitHub Action
 
 on:
   workflow_dispatch:
+    inputs:
+      repository_input:
+        description: 'my-org/repository'     
+        required: false
 
 jobs:
   run-linter:
@@ -11,8 +15,8 @@ jobs:
       - name: Run Linter
         uses: philips-labs/continuous-compliance@develop
         env:
-          TARGET_REPO: "Brend-Smits/cc-test-repo"
+          TARGET_REPO: ${{ github.event.inputs.repository_input }}
           GITHUB_TOKEN: ${{ secrets.TEMP_TOKEN }}
         with:
-          target_repo: "Brend-Smits/cc-test-repo"
+          target_repo: ${{ github.event.inputs.repository_input }}
           gh_token: ${{ secrets.TEMP_TOKEN }}

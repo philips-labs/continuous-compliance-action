@@ -5,7 +5,7 @@ on:
     inputs:
       target_repos:
         description: 'Target Repositories (my-org/repository,my-org/repository-2)'     
-        required: false
+        required: true
 
 jobs:
   run-linter:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Linter
-        uses: philips-labs/continuous-compliance@feature/multiple-repos-input
+        uses: philips-labs/continuous-compliance@main
         env:
           target_repos: ${{ github.event.inputs.target_repos }}
           GITHUB_TOKEN: ${{ secrets.TEMP_TOKEN }}

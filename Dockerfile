@@ -8,7 +8,10 @@ COPY . /app
 
 RUN git clone https://github.com/philips-labs/repolinter.git && cd repolinter && npm i && cd ..
 
-ENTRYPOINT ["/app/repolinter/bin/repolinter.js"]
+WORKDIR /cc
+RUN git clone https://github.com/philips-labs/continuous-compliance-action.git && cd continuous-compliance-action && git checkout feature/multiple-repos-input
+
+# ENTRYPOINT ["/cc/continuous-compliance-action/bin/loop.sh"]
 
 # FOR DEBUGGING IMAGE
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["bash"]

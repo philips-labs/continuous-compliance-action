@@ -11,7 +11,4 @@ RUN git clone https://github.com/philips-labs/repolinter.git && cd repolinter &&
 WORKDIR /cc
 RUN git clone https://github.com/philips-labs/continuous-compliance-action.git && cd continuous-compliance-action && git checkout feature/multiple-repos-input
 
-# ENTRYPOINT ["/cc/continuous-compliance-action/bin/loop.sh"]
-
-# FOR DEBUGGING IMAGE
-# ENTRYPOINT ["bash"]
+ENTRYPOINT ["/cc/continuous-compliance-action/bin/loop.sh"]

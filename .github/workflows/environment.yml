@@ -23,7 +23,7 @@ jobs:
           dockerfile: .
           image-name: continuous-compliance
           tags: latest 0.1
-          push-branches: main develop feature/multiple-repos-input
+          push-branches: main develop
         env:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}

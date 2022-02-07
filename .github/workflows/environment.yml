@@ -6,6 +6,7 @@ on:
       - Dockerfile
       - config/*
       - .github/workflows/environment.yml
+      - bin/*
   workflow_dispatch:
 
 jobs:

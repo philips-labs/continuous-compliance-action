@@ -23,8 +23,8 @@ regex='(https?)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
 if [[ $RULESET =~ $regex ]]
 then 
     echo "Link valid"
-    check_target_repos "--rulesetUrl ""$RULESET"""
+    check_target_repos "--rulesetUrl $RULESET"
 else
     echo "No link, assuming file path"
-    check_target_repos "--rulesetFile ""$RULESET"""
+    check_target_repos "-r $RULESET"
 fi

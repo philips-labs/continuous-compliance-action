@@ -14,9 +14,7 @@ jobs:
     steps:
       - name: Run Linter
         uses: philips-labs/continuous-compliance@main
-        env:
-          target_repos: ${{ github.event.inputs.target_repos }}
-          GITHUB_TOKEN: ${{ secrets.TEMP_TOKEN }}
         with:
           target_repos: ${{ github.event.inputs.target_repos }}
           gh_token: ${{ secrets.TEMP_TOKEN }}
+          ruleset: "https://gist.githubusercontent.com/Brend-Smits/385824d3422c0c06323bb1412cd5ba96/raw/08676dbf366a86641dd30fd5511b91afdee65adc/gistfile1.txt"

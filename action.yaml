@@ -4,10 +4,9 @@ branding:
   icon: lock
   color: purple
 inputs:
-  ruleset_file_url:
-    description: 'url that links to a ruleset config file'
+  ruleset:
+    description: 'file path or url that links to a ruleset config file'
     required: true
-    default: 'https://gist.githubusercontent.com/Brend-Smits/385824d3422c0c06323bb1412cd5ba96/raw/08676dbf366a86641dd30fd5511b91afdee65adc/gistfile1.txt'
   gh_token:
     description: 'Github token that has permissions to create labels, issues and has read rights to view files.'
     required: true
@@ -19,5 +18,5 @@ runs:
   image: 'docker://ghcr.io/philips-labs/continuous-compliance:latest'
   args:
     - "${{ inputs.gh_token }}"
-    - "${{ inputs.ruleset_file_url }}"
+    - "${{ inputs.ruleset }}"
     - "${{ inputs.target_repos }}"

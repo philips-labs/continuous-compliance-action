@@ -6,9 +6,6 @@ LABEL maintainer="Brend Smits <brend.smits@philips.com>"
 WORKDIR /app
 COPY . /app
 
-RUN git clone https://github.com/philips-labs/repolinter.git && cd repolinter && npm i && cd ..
+RUN git clone --depth=1 https://github.com/philips-labs/repolinter.git && cd repolinter && npm i --production && cd ..
 
-WORKDIR /cc
-RUN git clone https://github.com/philips-labs/continuous-compliance-action.git && cd continuous-compliance-action
-
-ENTRYPOINT ["/cc/continuous-compliance-action/bin/loop.sh"]
+ENTRYPOINT ["/app/bin/loop.sh"]

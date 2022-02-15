@@ -26,5 +26,5 @@ then
     check_target_repos "--rulesetUrl"
 else
     echo "No link, assuming base64 encoded file"
-    check_target_repos "-c ""$RULESET"""
+    check_target_repos "-c"
 fi

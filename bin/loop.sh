@@ -13,7 +13,7 @@ function check_target_repos {
       echo "Checking repository: $i"
       echo "Using ruleset parameter: $1"
       /app/repolinter/bin/repolinter.js lint \
-        "$1" "$RULESET" \
+        "$1" \
         -g https://x-access-token:"$GITHUB_TOKEN"@github.com/"${i}"
     done
 } 
@@ -23,8 +23,8 @@ regex='(https?)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
 if [[ $RULESET =~ $regex ]]
 then 
     echo "Link valid"
-    check_target_repos "--rulesetUrl"
+    check_target_repos "--rulesetUrl ""$RULESET"""
 else
-    echo "No link, assuming file path"
-    check_target_repos "-r"
+    echo "No link, assuming base64 encoded file"
+    check_target_repos "-c ""$RULESET"""
 fi

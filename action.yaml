@@ -5,7 +5,7 @@ branding:
   color: purple
 inputs:
   ruleset:
-    description: 'file path or url that links to a ruleset config file'
+    description: 'Base64 encoded ruleset config file or url to ruleset config file.'
     required: true
   gh_token:
     description: 'Github token that has permissions to create labels, issues and has read rights to view files.'

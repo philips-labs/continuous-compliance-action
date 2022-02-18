@@ -1,7 +1,7 @@
 #!/bin/bash
 [ -n "$1" ] && GITHUB_TOKEN=$1 || exit 1
 [ -n "$2" ] && RULESET=$2 || exit 1 
-[ -n "$3" ] && TARGET_REPOS=$3 || exit 1
+[ -n "$3" ] && TARGET_REPOS=$3 || exit 0
 
 # Function that checks the target repositories with repolinter
 # $1 is the ruleset argument, valid examples here are:

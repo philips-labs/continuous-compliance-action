@@ -27,12 +27,12 @@ jobs:
           push-branches: main develop
           sign: true
           sbom: true
-          slsa: true
+          slsa-provenance: true
         env:
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_REGISTRY: ghcr.io/philips-labs
           GITHUB_ORGANIZATION: philips-labs
-          COSIGN_PASSWORD: $[{ secrets.COSIGN_PASSWORD }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PUBLIC_KEY: ${{ secrets.COSIGN_PUBLIC_KEY }}

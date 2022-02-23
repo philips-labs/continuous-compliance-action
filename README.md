@@ -44,7 +44,7 @@ After stumbling upon Repolinter and Newrelics Action, we decided we wanted somet
 
 ### Built With
 
-- [Repolinter](https://github.com/philips-labs/repolinter) (forked, [original here](https://github.com/todogroup/repolinter))
+- [Repolinter](https://github.com/philips-forks/repolinter) (forked, [original here](https://github.com/todogroup/repolinter))
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

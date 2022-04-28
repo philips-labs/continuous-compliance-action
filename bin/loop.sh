@@ -15,6 +15,7 @@ function check_target_repos {
       /app/repolinter/bin/repolinter.js lint \
         "$1" \
         -g https://x-access-token:"$GITHUB_TOKEN"@github.com/"${i}"
+      echo "::notice:: Checked repository: $i"
     done
 } 
 

@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout Continuous Compliance 
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build Docker Images
-        uses: philips-software/docker-ci-scripts@v4.1.1
+        uses: philips-software/docker-ci-scripts@v4.1.3
         with:
           dockerfile: .
           image-name: continuous-compliance

@@ -8,6 +8,9 @@
 # 1. --rulesetFile /config/ruleset.json
 # 2. --rulesetUrl https://gist.github.com/ruleset.json
 function check_target_repos {
+    echo '### Overview checked repositories' >> $GITHUB_STEP_SUMMARY
+    echo '| Repository | Link |' >> $GITHUB_STEP_SUMMARY
+    echo '| ---------- | ---- |' >> $GITHUB_STEP_SUMMARY
     for i in $(echo "$TARGET_REPOS" | sed "s/,/ /g"); do
       export TARGET_REPO=$i
       echo "Checking repository: $i"
@@ -15,8 +18,9 @@ function check_target_repos {
       /app/repolinter/bin/repolinter.js lint \
         "$1" \
         -g https://x-access-token:"$GITHUB_TOKEN"@github.com/"${i}"
-      echo "::notice:: Checked repository: $i"
+      echo '| $i | <https://github.com/$i> |' >> $GITHUB_STEP_SUMMARY
     done
+    echo 'Done checking the compliance :rocket: ' >> $GITHUB_STEP_SUMMARY
 } 
 
 regex='(https?)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'

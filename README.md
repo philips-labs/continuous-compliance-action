@@ -81,6 +81,10 @@ See [Continuous-Compliance-Template](https://github.com/philips-labs/continuous-
 | gh_token | Github token that has permissions to create labels, issues and has read rights to view files. | `true` | |
 | target_repos | Target Repositories (my-org/repository,my-org/repository-2) | `true` | |
 
+### Configuring Rules
+
+To configure rules, you create a ruleset for Repolinter to use. There are different types of rules and fixes you can configure. The documentation can be found in the [Repolinter repository](https://github.com/todogroup/repolinter/tree/main/docs).
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Getting Started

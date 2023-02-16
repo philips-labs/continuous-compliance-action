@@ -15,7 +15,7 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/philips-labs/continuous-compliance:latest'
+  image: 'docker://ghcr.io/philips-labs/continuous-compliance:dev'
   args:
     - "${{ inputs.gh_token }}"
     - "${{ inputs.ruleset }}"

@@ -34,7 +34,7 @@ Continuous Compliance makes it possible to enforce company policy on repositorie
 
 ## State
 
-Work in progress - We're testing this action internally at this moment...  
+At Philips we have been using this Action since mid 2022 without any problems. Head over to <https://github.com/philips-labs/continuous-compliance-template> to see how we organize this.  
 If you want to stay updated, hit the "Watch" button.
 
 ## Background
@@ -80,6 +80,10 @@ See [Continuous-Compliance-Template](https://github.com/philips-labs/continuous-
 | ruleset | Base64 encoded ruleset config file or url to ruleset config file. | `true` | |
 | gh_token | Github token that has permissions to create labels, issues and has read rights to view files. | `true` | |
 | target_repos | Target Repositories (my-org/repository,my-org/repository-2) | `true` | |
+
+### Configuring Rules
+
+To configure rules, you create a ruleset for Repolinter to use. There are different types of rules and fixes you can configure. The documentation can be found in the [Repolinter repository](https://github.com/todogroup/repolinter/tree/main/docs).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

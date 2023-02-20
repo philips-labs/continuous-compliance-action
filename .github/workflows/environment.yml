@@ -23,8 +23,8 @@ jobs:
         with:
           dockerfile: .
           image-name: continuous-compliance
-          tags: dev 0.2
-          push-branches: main develop test-repolinter-experimental
+          tags: latest 0.4
+          push-branches: main develop
           sign: true
           sbom: true
           slsa-provenance: true

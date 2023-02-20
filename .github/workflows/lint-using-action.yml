@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Linter
-        uses: philips-labs/continuous-compliance@main
+        uses: philips-labs/continuous-compliance-action@main
         with:
           target_repos: ${{ github.event.inputs.target_repos }}
           gh_token: ${{ secrets.TEMP_TOKEN }}

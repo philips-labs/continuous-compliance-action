@@ -63,10 +63,10 @@ See [Continuous-Compliance-Template](https://github.com/philips-labs/continuous-
       - name: Create ruleset config
         id: config
         run: |
-          echo "::set-output name=ENCODED_RULESET::$(cat ./config/repolint.json | base64 -w 0)"
+          echo "ENCODED_RULESET=$(cat ./config/repolint.json | base64 -w 0)" >> $GITHUB_OUTPUT
 
       - name: Perform repolinter on repositories
-        uses: philips-labs/continuous-compliance-action@v0.1.1
+        uses: philips-labs/continuous-compliance-action@v0.6.1
         with:
           ruleset: ${{steps.config.outputs.ENCODED_RULESET}} 
           gh_token: ${{steps.token.outputs.token}}

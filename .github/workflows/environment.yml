@@ -23,7 +23,7 @@ jobs:
         with:
           dockerfile: .
           image-name: continuous-compliance
-          tags: latest 0.6
+          tags: latest 0.6.1
           push-branches: main develop
           sign: true
           sbom: true
